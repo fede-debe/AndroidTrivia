@@ -1,12 +1,12 @@
 package com.example.android.navigation
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.FragmentTitleBinding
 
 /**
@@ -26,7 +26,25 @@ class TitleFragment : Fragment() {
                 view.view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)*/
             Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment)
         )
+        // declaring that I am going to have a menu associated with the TitleFragment
+        setHasOptionsMenu(true)
         // we need to return binding.root (which contains the root of the layout we’ve just inflated)
         return binding.root
+    }
+
+    // menu are created on this method, as the layout we also inflate menus
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        // we use the inflater provided from the method to inflate the menu using the one-liner
+        inflater.inflate(R.menu.overflow_menu, menu)
+    }
+
+    // when a menu item is selected, this fragments' method will be called
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        /** if the navigationUI doesn't handle the selection, we'll call super on options items selected with the menu item,
+            which allows the app to directly handle the menu item without navigating.*/
+        return NavigationUI.onNavDestinationSelected(item,
+                view!!.findNavController())
+        || super.onOptionsItemSelected(item)
     }
 }
