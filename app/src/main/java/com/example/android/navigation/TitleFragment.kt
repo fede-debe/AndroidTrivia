@@ -20,12 +20,14 @@ class TitleFragment : Fragment() {
                 inflater, R.layout.fragment_title, container, false)
 
         // create onClickListener to trigger the action(navigate between the destination) - (in Kotlin we can pass an anonymous function into setOnClickListener)
-        binding.playButton.setOnClickListener (
+        binding.playButton.setOnClickListener {
             // we call this function on the view to get an instance of the navigation controller
             /** Navigation.findNavController(it).navigate(R.id.action_titleFragment_to_gameFragment)
-                view.view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)*/
-            Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment)
-        )
+            view.view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)*/
+            it.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
+        }
+
+
         // declaring that I am going to have a menu associated with the TitleFragment
         setHasOptionsMenu(true)
         // we need to return binding.root (which contains the root of the layout we’ve just inflated)
